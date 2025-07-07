@@ -1,0 +1,13 @@
+// 플러그인 관리 (반드시 최상단에 위치)
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+// 프로젝트 이름 설정
+rootProject.name = 'hello-world-gradle'
+
+// Gradle 설정
+gradle.startParameter.showStacktrace = ShowStacktrace.ALWAYS_FULL 

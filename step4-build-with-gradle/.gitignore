@@ -1,2 +1,26 @@
-*.jar
+# --- Gradle ---
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+build/
+out/
+
+# --- Gradle Caches (Optional) ---
+**/build/
+**/.gradle/
+
+# --- Java/Kotlin/Groovy Compilation ---
 *.class
+*.log
+*.jar
+*.war
+*.ear
+
+# VSCode
+.vscode/
+
+# --- Temporary Files ---
+*.tmp
+*.swp
+*.swo
+*.bak
+*.orig

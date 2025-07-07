@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+// 프로젝트 정보
+group = 'com.example'
+version = '1.0.0'
+
+// Java 버전 설정
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+// 메인 클래스 설정 (./gradlew run 할 때 실행될 클래스)
+application {
+    mainClass = 'JsonApp'
+}
+
+// 의존성을 다운로드할 저장소 설정
+repositories {
+    mavenCentral()  // Maven Central Repository
+}
+
+// 의존성 정의
+dependencies {
+    // Jackson JSON 라이브러리
+    //  - Step 3에서 수동으로 다운로드했던 3개 JAR이 여기 한 줄로!
+    //  - jackson-databind는 jackson-core와 jackson-annotations를 자동으로 포함
+    //  - 의존성 전이(transitive dependencies) 자동 해결!
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+}
+
+// 컴파일 설정
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+// Gradle Wrapper 설정
+wrapper {
+    gradleVersion = '8.5'
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+// 추가 태스크: JAR 파일에 메인 클래스 정보 포함
+jar {
+    manifest {
+        attributes(
+            'Main-Class': application.mainClass.get()
+        )
+    }
+}
+
+// 커스텀 태스크: 의존성 정보 출력
+tasks.register('showDependencies') {
+    doLast {
+        println "\n=== 프로젝트 의존성 정보 ==="
+        configurations.runtimeClasspath.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+            println "📦 ${artifact.moduleVersion.id.name}:${artifact.moduleVersion.id.version}"
+        }
+        println "\n✅ Step 3에서 수동으로 다운로드했던 3개 JAR 파일이 자동으로 관리됩니다!"
+        println "   - jackson-core, jackson-databind, jackson-annotations"
+    }
+} 
